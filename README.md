@@ -7,7 +7,7 @@ http.RequestHandler functions.
 
 Features
 --------
- 
+
  * Supports HTTP Basic and HTTP Digest authentication.
  * Supports htpasswd and htdigest formatted files.
  * Automatic reloading of password files.
@@ -15,7 +15,7 @@ Features
  * Supports MD5, SHA1 and BCrypt for Basic authentication password storage.
  * Configurable Digest nonce cache size with expiration.
  * Wrapper for legacy http handlers (http.HandlerFunc interface)
- 
+
 Example usage
 -------------
 
@@ -27,7 +27,7 @@ This is a complete working example for Basic auth:
             "fmt"
             "net/http"
 
-            auth "github.com/abbot/go-http-auth"
+            auth "github.com/ixugo/go-http-auth"
     )
 
     func Secret(user, realm string) string {

@@ -1,4 +1,4 @@
-module github.com/abbot/go-http-auth
+module github.com/ixugo/go-http-auth
 
 go 1.14
 
