@@ -106,9 +106,9 @@ func (da *DigestAuth) RequireAuth(w http.ResponseWriter, r *http.Request) {
 
 	da.mutex.RLock()
 	w.Header().Set(contentType, da.Headers.V().UnauthContentType)
-	w.Header().Set(da.Headers.V().Authenticate,
-		fmt.Sprintf(`Digest realm="%s", nonce="%s", opaque="%s", algorithm=MD5, qop="auth"`,
-			da.Realm, nonce, da.Opaque))
+	h := w.Header()
+	h[da.Headers.V().Authenticate] = []string{fmt.Sprintf(`Digest realm="%s", nonce="%s", opaque="%s", algorithm=MD5, qop="auth"`,
+		da.Realm, nonce, da.Opaque)}
 	w.WriteHeader(da.Headers.V().UnauthCode)
 	w.Write([]byte(da.Headers.V().UnauthResponse))
 	da.mutex.RUnlock()
@@ -214,7 +214,7 @@ func (da *DigestAuth) CheckAuth(r *http.Request) (username string, authinfo *str
 
 // Default values for ClientCacheSize and ClientCacheTolerance for DigestAuth
 const (
-	DefaultClientCacheSize      = 1000
+	DefaultClientCacheSize      = 1024
 	DefaultClientCacheTolerance = 100
 )
 
