@@ -151,7 +151,10 @@ func (da *DigestAuth) CheckAuth(r *http.Request) (username string, authinfo *str
 	if _, ok := auth["algorithm"]; !ok {
 		auth["algorithm"] = "MD5"
 	}
-	if da.Opaque != auth["opaque"] || auth["algorithm"] != "MD5" || auth["qop"] != "auth" {
+	// da.Opaque != auth["opaque"]
+	// 因 liveVIS/蒲城公安 等平台不携带 opaque 此参数，故此删除
+	// 建议以上平台整改
+	if auth["algorithm"] != "MD5" || auth["qop"] != "auth" {
 		return "", nil
 	}
 
@@ -283,6 +286,7 @@ func NewDigestAuthenticator(realm string, secrets SecretProvider) *DigestAuth {
 		PlainTextSecrets:     false,
 		ClientCacheSize:      DefaultClientCacheSize,
 		ClientCacheTolerance: DefaultClientCacheTolerance,
-		clients:              map[string]*digestClient{}}
+		clients:              map[string]*digestClient{},
+	}
 	return da
 }
